@@ -2,7 +2,7 @@
 import React from "react";
 import { Avatar, Flex, useColorModeValue, Icon, Text } from "@chakra-ui/react";
 // Custom components
-import Card from "components/card/Card.js";
+import Card from "views/admin/default/components/node_modules/components/card/Card.js.js";
 import TransparentMenu from "components/menu/TransparentMenu";
 // Custom icons
 import { IoEllipsisVertical } from "react-icons/io5";

@@ -22,7 +22,7 @@ import {
 } from "@chakra-ui/react";
 
 // Custom components
-import IconBox from "components/icons/IconBox";
+import IconBox from "views/admin/default/node_modules/components/icons/IconBox";
 import { HorizonLogo } from "components/icons/Icons";
 import { SidebarResponsive } from "components/sidebar/Sidebar";
 import { SidebarContext } from "contexts/SidebarContext";

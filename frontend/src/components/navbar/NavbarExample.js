@@ -18,7 +18,7 @@ import {
   useDisclosure,
   SimpleGrid,
 } from "@chakra-ui/react";
-import IconBox from "components/icons/IconBox";
+import IconBox from "views/admin/default/node_modules/components/icons/IconBox";
 import { SidebarResponsive } from "components/sidebar/Sidebar";
 import PropTypes from "prop-types";
 import React from "react";
