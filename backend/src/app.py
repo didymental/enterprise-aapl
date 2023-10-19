@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from src.routes.blueprint import blueprint
 
 def create_app():
@@ -7,6 +8,7 @@ def create_app():
     return app
 
 app = create_app()
+CORS(blueprint)
 app.register_blueprint(blueprint)
 
 if __name__ == "__main__":

@@ -5,13 +5,13 @@ from sqlalchemy import inspect
 
 
 def get_reporting_amount_by_hour_interval():
-    start_time = request.form["startTime"]
-    end_time = request.form["endTime"]
+    start_time = request.args["startTime"]
+    end_time = request.args["endTime"]
 
     filters = dict()
-    if start_time:
+    if start_time and start_time != "":
         filters["start_time"] = start_time
-    if end_time:
+    if end_time and end_time != "":
         filters["end_time"] = end_time
 
     order_service = OrderService()
@@ -51,8 +51,8 @@ def get_reporting_amount_by_city():
 
 def get_running_order_qty_total_by_city():
     filters = dict()
-    if request.form and request.form["city"]:
-        filters["ship_to_city_cd"] = json.loads(request.form["city"])
+    if request.args and request.args["cities"]:
+        filters["ship_to_city_cd"] = json.loads(request.args["cities"])
 
     order_service = OrderService()
     orders = order_service.get_orders(
