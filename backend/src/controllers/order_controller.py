@@ -52,7 +52,7 @@ def get_reporting_amount_by_city():
 def get_running_order_qty_total_by_city():
     filters = dict()
     if request.form and request.form["city"]:
-        filters["ship_to_city_cd"] = request.form["city"]
+        filters["ship_to_city_cd"] = json.loads(request.form["city"])
 
     order_service = OrderService()
     orders = order_service.get_orders(
