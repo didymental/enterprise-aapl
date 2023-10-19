@@ -11,7 +11,7 @@ class OrderService:
         self.engine = create_engine(f"sqlite:///{DB_FILE_PATH}")
         self.Session = sessionmaker(bind=self.engine)
 
-    def get_orders(self, filters=dict(), group_by=None, aggregation=None):
+    def get_orders(self, filters=dict(), group_by=None, aggregation=None, sort=None):
         session = self.Session()
         try:
             query = session.query(Order)
@@ -24,6 +24,10 @@ class OrderService:
                 query = query.filter(
                     Order.order_time >= start_time, Order.order_time < end_time
                 )
+
+            if "ship_to_city_cd" in filters:
+                cities = filters["ship_to_city_cd"]
+                query = query.filter(Order.ship_to_city_cd.in_(cities))
 
             if group_by:
                 group_by_columns = [getattr(Order, col) for col in group_by]
@@ -39,11 +43,20 @@ class OrderService:
                     )
 
                 # Add more aggregation options as needed
-                
+
                 query = query.with_entities(*group_by_columns, *aggregation_columns)
 
             # Retrieve the orders that match the filters
             orders = query.all()
+
+            if sort:
+                sort_col, sort_order = sort
+                orders = sorted(
+                    orders,
+                    key=lambda x: getattr(x, sort_col),
+                    reverse=sort_order == "desc",
+                )
+
             return orders
 
         finally:
