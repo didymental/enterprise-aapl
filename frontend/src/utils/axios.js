@@ -5,9 +5,9 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' }
 })
 
-api.interceptors.response.use((originalResponse) => {
-  originalResponse.data = handleDates(originalResponse.data);
-  return originalResponse;
-});
+// api.interceptors.response.use((originalResponse) => {
+//   originalResponse.data = handleDates(originalResponse.data);
+//   return originalResponse;
+// });
 
 export { api }

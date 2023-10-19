@@ -2,7 +2,6 @@
 import {
   Box,
   Icon,
-  Select,
   SimpleGrid,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -11,20 +10,21 @@ import {
 import MiniCalendar from "components/calendar/MiniCalendar";
 import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   MdAddTask,
   MdFileCopy,
+  MdOutlineAccountTree
 } from "react-icons/md";
-import DailyTraffic from "views/admin/default/components/DailyTraffic";
-import PieCard from "views/admin/default/components/PieCard";
-import TotalSpent from "views/admin/default/components/TotalSpent";
-import WeeklyRevenue from "views/admin/default/components/WeeklyRevenue";
+import OrderQtyByCity from "views/admin/default/components/OrderQtyByCity";
+import ReportingAmountByCity from "views/admin/default/components/ReportingAmountByCity";
+import ReportingAmountByHourByCity from "views/admin/default/components/ReportingAmountByHourByCity";
 
 export default function UserReports() {
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
+
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid
@@ -58,21 +58,17 @@ export default function UserReports() {
           value='2935'
         />
       </SimpleGrid>
+      
+      <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'> 
+        <ReportingAmountByHourByCity />  
+      </SimpleGrid>
 
-      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
-        <TotalSpent />
-        <WeeklyRevenue />
+      <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'> 
+        <ReportingAmountByCity />  
       </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-          <DailyTraffic />
-          <PieCard />
-        </SimpleGrid>
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-          <MiniCalendar h='100%' minW='100%' selectRange={false} />
-        </SimpleGrid>
+
+      <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'> 
+        <OrderQtyByCity />  
       </SimpleGrid>
     </Box>
   );

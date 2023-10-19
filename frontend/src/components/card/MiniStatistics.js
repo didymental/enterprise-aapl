@@ -7,6 +7,7 @@ import {
   StatNumber,
   useColorModeValue,
   Text,
+  HStack,
 } from "@chakra-ui/react";
 // Custom components
 import Card from "components/card/Card.js";
@@ -14,17 +15,18 @@ import Card from "components/card/Card.js";
 import React from "react";
 
 export default function Default(props) {
-  const { startContent, endContent, name, growth, value } = props;
+  const { startContent, endContent, name, growth, value, ...rest } = props;
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textColorSecondary = "secondaryGray.600";
 
   return (
-    <Card py='15px'>
+    <Card py='15px' {...rest}>
       <Flex
         my='auto'
         h='100%'
         align={{ base: "center", xl: "start" }}
-        justify={{ base: "center", xl: "center" }}>
+        justify={{ base: "center", xl: "start" }}
+      >
         {startContent}
 
         <Stat my='auto' ms={startContent ? "18px" : "0px"}>
