@@ -9,7 +9,6 @@ export const useLineChart = (callbackFn, categoryKey, chartDataKey) => {
 
   useEffect(() => {
     callbackFn().then(res => {
-      console.log(res)
       // get categories
       const cats = reduceByKey(res.data, categoryKey)
       setCategories(cats)
@@ -26,6 +25,9 @@ export const useLineChart = (callbackFn, categoryKey, chartDataKey) => {
   useEffect(() => {
     const _chartOptions = lineChartOptionsGeneral
     _chartOptions['xaxis']['categories'] = categories
+    if (categoryKey == "order_time") {
+      _chartOptions['xaxis']['type'] = "datetime"
+    }
     setChartOptions({ ..._chartOptions })
   }, [categories])
 

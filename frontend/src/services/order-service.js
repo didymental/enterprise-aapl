@@ -7,6 +7,7 @@ export const getReportingAmountByHourInterval = async (startTime="050000", endTi
       endTime
     }
   })
+  console.log(response)
   return response
 }
 

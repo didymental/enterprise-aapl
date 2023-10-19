@@ -15,10 +15,10 @@ def get_reporting_amount_by_hour_interval():
         filters["end_time"] = end_time
 
     order_service = OrderService()
-    orders = order_service.get_orders(
+    orders = order_service.group_orders_by_hour(
         filters=filters,
-        group_by=["ship_to_city_cd"],
-        aggregation=("sum", "rptg_amt"),
+        # group_by=["hour"],
+        # aggregation=("sum", "rptg_amt"),
     )
     results = []
     for order in orders:

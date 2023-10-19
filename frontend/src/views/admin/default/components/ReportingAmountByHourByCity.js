@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 // Chakra imports
 import { Box, Flex, Select, Text,  } from "@chakra-ui/react";
-import LineChart from "components/charts/LineChart";
+import LineAreaChart from "components/charts/LineAreaChart";
 
 // Custom components
 import Card from "components/card/Card.js";
@@ -37,9 +37,9 @@ const useCityReportingByHour = () => {
 
 }
 
-export default function CityReportingAmount(props) {
+export default function ReportingAmountByHour(props) {
   const { onStartTimeChange, onEndTimeChange, callbackFn} = useCityReportingByHour()
-  const { chartOptions, chartData } = useLineChart(callbackFn, "ship_to_city_cd", "sum_rptg_amt")
+  const { chartOptions, chartData } = useLineChart(callbackFn, "hour", "count")
 
   return (
     <Card align='center' direction='column' w='100%' {...props} key={chartData}>
@@ -54,13 +54,13 @@ export default function CityReportingAmount(props) {
               color='secondaryGray.600'
               fontSize='sm'
               fontWeight='500'>
-              Reporting Amount per City per Hour
+              Reporting Amount by Hour
             </Text>
           </Flex>
         </Flex>
       </Flex>
       <Box h='240px' mt='auto' overflowY="auto">
-        <LineChart
+        <LineAreaChart
           chartData={chartData}
           chartOptions={chartOptions}
         />
