@@ -15,11 +15,7 @@ def get_reporting_amount_by_hour_interval():
         filters["end_time"] = end_time
 
     order_service = OrderService()
-    orders = order_service.group_orders_by_hour(
-        filters=filters,
-        # group_by=["hour"],
-        # aggregation=("sum", "rptg_amt"),
-    )
+    orders = order_service.group_orders_by_hour(filters=filters)
     results = []
     for order in orders:
         results.append(order._asdict())
@@ -64,6 +60,6 @@ def get_running_order_qty_total_by_city():
     for order in orders:
         results.append(order._asdict())
 
-    total_sum = sum(list(map(lambda x: x['sum_order_qty'], results)))
+    total_sum = sum(list(map(lambda x: x["sum_order_qty"], results)))
 
     return {"sum": total_sum, "data": results}

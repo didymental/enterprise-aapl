@@ -10,24 +10,28 @@ class OrderService:
     def __init__(self):
         self.engine = create_engine(f"sqlite:///{DB_FILE_PATH}")
         self.Session = sessionmaker(bind=self.engine)
-    
+
     def group_orders_by_hour(self, filters=dict()):
         session = self.Session()
 
         # Parse start_time and end_time as datetime objects
         start_time = datetime.strptime(filters["start_time"], "%H%M%S")
         end_time = datetime.strptime(filters["end_time"], "%H%M%S")
-        
+
         # Define the select statement
-        sql_query = text("""
+        sql_query = text(
+            """
                 SELECT STRFTIME('%H', order_time) AS hour, COUNT(*) AS count
                 FROM order_table
                 WHERE order_time BETWEEN :start_time AND :end_time
                 GROUP BY hour
                 ORDER BY hour
-            """)
+            """
+        )
 
-        results = session.execute(sql_query, {"start_time": start_time, "end_time": end_time}).fetchall()
+        results = session.execute(
+            sql_query, {"start_time": start_time, "end_time": end_time}
+        ).fetchall()
         session.close()
         return results
 
@@ -54,7 +58,11 @@ class OrderService:
                 query = query.group_by(*group_by_columns)
 
             if aggregation:
-                group_by_columns = [getattr(Order, col) for col in group_by] if "hour" not in group_by else []
+                group_by_columns = (
+                    [getattr(Order, col) for col in group_by]
+                    if "hour" not in group_by
+                    else []
+                )
                 aggr, aggr_col = aggregation
                 aggregation_columns = []
                 if aggr == "sum":
