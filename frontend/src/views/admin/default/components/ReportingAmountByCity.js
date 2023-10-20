@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 // Chakra imports
-import { Box, Flex, Select, Text,  } from "@chakra-ui/react";
+import { Box, Flex, Text,  } from "@chakra-ui/react";
 import LineChart from "components/charts/LineChart";
+import Select from 'react-select';
 
 // Custom components
 import Card from "components/card/Card.js";
@@ -13,7 +14,7 @@ import { getReportingAmountByCity } from "services/order-service";
 import SwitchField from "components/fields/SwitchField";
 
 const useReportingByCity = () => {
-  const [sortCol, setSortCol] = useState(undefined)
+  const [sortCol, setSortCol] = useState("sum_rptg_amt")
   const [sortOrder, setSortOrder] = useState(undefined)
   const [callbackFn, setCallbackFn] = useState(() => () => getReportingAmountByCity())
 
@@ -32,13 +33,14 @@ const useReportingByCity = () => {
   return {
     onSortColChange,
     onSortOrderChange,
-    callbackFn
+    callbackFn,
+    sortOrder: sortOrder === "asc" ? "Ascending" : sortOrder === "desc" ? "Descending" : undefined
   }
 
 }
 
 export default function CityReportingAmount(props) {
-  const { onSortColChange, onSortOrderChange, callbackFn} = useReportingByCity()
+  const { onSortColChange, onSortOrderChange, callbackFn, sortOrder} = useReportingByCity()
   const { chartOptions, chartData } = useLineChart(callbackFn, "ship_to_city_cd", "sum_rptg_amt", 1)
 
   return (
@@ -55,6 +57,15 @@ export default function CityReportingAmount(props) {
             </Text>
           </Flex>
         </Flex>
+        <Box w="100%" >
+          <Select
+            value={sortOrder ? {label: sortOrder, value: sortOrder}: undefined}
+            options={[{ label: 'Ascending', value: 'asc' }, { label: 'Descending', value: 'desc' }]}
+            onChange={(newValue) => onSortOrderChange(newValue.value)}
+            overflowY
+            maxMenuHeight="150px"
+          />
+        </Box>
       </Flex>
       <Box h='240px' mt='auto' overflowY="auto">
         <LineChart

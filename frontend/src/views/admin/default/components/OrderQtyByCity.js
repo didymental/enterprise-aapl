@@ -75,7 +75,7 @@ export default function OrderQtyByCity(props) {
           />
         </Flex>
         <Box w="100%" >
-          <Select isMulti value={categories.map(cat => ({ label: cat, value: cat }))} options={options.map(opt => ({ label: opt, value: opt }))} onChange={(newValue) => batchUpdateCities(newValue)} overflowY maxMenuHeight="40px"/>
+          <Select isMulti value={categories.map(cat => ({ label: cat, value: cat }))} options={options.map(opt => ({ label: opt, value: opt }))} onChange={(newValue) => batchUpdateCities(newValue)} overflowY maxMenuHeight="150px"/>
         </Box>
       </Flex>
       <LineChart
