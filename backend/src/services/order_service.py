@@ -5,11 +5,28 @@ from ..utils.constants import DB_FILE_PATH
 from datetime import datetime
 from sqlalchemy.sql import func
 
-
 class OrderService:
     def __init__(self):
         self.engine = create_engine(f"sqlite:///{DB_FILE_PATH}")
         self.Session = sessionmaker(bind=self.engine)
+    
+    def get_unique_cities(self):
+        session = self.Session()
+        
+        # Define the query to retrieve unique cities
+        stmt = text(
+            """
+                SELECT DISTINCT ship_to_city_cd
+                FROM order_table
+            """
+        )
+
+        # Execute the query and fetch the results
+        results = session.execute(stmt).fetchall()
+        session.close()
+        
+        unique_cities = [result[0] for result in results]
+        return unique_cities
 
     def group_orders_by_hour(self, filters=dict()):
         session = self.Session()

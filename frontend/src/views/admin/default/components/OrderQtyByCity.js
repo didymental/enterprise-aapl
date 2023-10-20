@@ -1,20 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 // Chakra imports
-import { Box, Flex, Icon, Select, Text,  } from "@chakra-ui/react";
+import { Box, Flex, Icon, Text,  } from "@chakra-ui/react";
 import LineChart from "components/charts/LineChart";
 import MiniStatistics from "components/card/MiniStatistics";
-import {
-  MdOutlineAccountTree
-} from "react-icons/md";
+import Select from 'react-select';
 
 // Custom components
 import Card from "components/card/Card.js";
-import IconBox from "components/icons/IconBox";
 
 // Assets
 import { useLineChart } from "hooks/useLineChart";
-import { getRunningOrderQtyTotalByCity } from "services/order-service";
+import { getRunningOrderQtyTotalByCity, getUniqueCities } from "services/order-service";
 
 const useOrderQtyByCity = () => {
   const [cities, setCities] = useState([])
@@ -24,6 +21,13 @@ const useOrderQtyByCity = () => {
     setTotal(data.sum)
     return data
   })
+  const [options, setOptions] = useState([])
+
+  useEffect(() => {
+    getUniqueCities().then(res => {
+      setOptions(res.data)
+    })
+  }, [])
 
   useEffect(() => {
     setCallbackFn(() => async () => {
@@ -33,29 +37,25 @@ const useOrderQtyByCity = () => {
     })
   }, [cities])
 
-  const addCity = (city) => {
-    setCities([...cities, city])
-  }
-
-  const removeCity = (city) => {
-    setCities(cities.filter(city => city !== city))
+  const batchUpdateCities = (batch) => {
+    setCities(batch.map(({value}) => value))
   }
 
   return {
-    addCity,
-    removeCity,
+    batchUpdateCities,
     callbackFn, 
-    total
+    total,
+    options
   }
 
 }
 
 export default function OrderQtyByCity(props) {
-  const { addCity, removeCity, total: runningTotal, callbackFn} = useOrderQtyByCity()
-  const { chartOptions, chartData } = useLineChart(callbackFn, "ship_to_city_cd", "sum_order_qty")
+  const { batchUpdateCities, total: runningTotal, callbackFn, options} = useOrderQtyByCity()
+  const { chartOptions, chartData, categories } = useLineChart(callbackFn, "ship_to_city_cd", "sum_order_qty")
 
   return (
-    <Card align='center' direction='column' w='100%' {...props} key={chartData}>
+    <Card align='center' direction='column' w='100%' {...props} key={runningTotal}>
       <Flex justify='space-between' align='start' px='10px' pt='5px'>
         <Flex flexDirection='column' align='start' me='20px'>
           <Flex w='100%'>
@@ -70,8 +70,12 @@ export default function OrderQtyByCity(props) {
           <MiniStatistics
             name={"Total Orders"}
             value={runningTotal}
+            align="start"
           />
         </Flex>
+        <Box w="100%" >
+          <Select isMulti value={categories.map(cat => ({ label: cat, value: cat }))} options={options.map(opt => ({ label: opt, value: opt }))} onChange={(newValue) => batchUpdateCities(newValue)} overflowY maxMenuHeight="40px"/>
+        </Box>
       </Flex>
       <Box h='300px' mt='auto' overflowY="auto">
         <LineChart

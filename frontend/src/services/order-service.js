@@ -7,7 +7,6 @@ export const getReportingAmountByHourInterval = async (startTime="050000", endTi
       endTime
     }
   })
-  console.log(response)
   return response
 }
 
@@ -23,8 +22,13 @@ export const getReportingAmountByCity = async (sortCol=undefined, sortOrder=unde
 export const getRunningOrderQtyTotalByCity = async (cities) => {
   const response = await api.get('/order-qty/city', {
     params: {
-      cities,
+      cities: JSON.stringify(cities)
     }
   })
+  return response
+}
+
+export const getUniqueCities = async () => {
+  const response = await api.get('/city')
   return response
 }

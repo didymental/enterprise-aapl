@@ -1,5 +1,6 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
+import {Box} from "@chakra-ui/react"
 
 class LineChart extends React.Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class LineChart extends React.Component {
   }
 
   render() {
+    console.log('rerender')
     return (
       <ReactApexChart
         options={this.state.chartOptions}

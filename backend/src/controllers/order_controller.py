@@ -63,3 +63,8 @@ def get_running_order_qty_total_by_city():
     total_sum = sum(list(map(lambda x: x["sum_order_qty"], results)))
 
     return {"sum": total_sum, "data": results}
+
+def get_unique_cities():
+    order_service = OrderService()
+    cities = order_service.get_unique_cities()
+    return cities

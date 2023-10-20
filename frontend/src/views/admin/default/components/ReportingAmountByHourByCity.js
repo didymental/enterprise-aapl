@@ -43,9 +43,6 @@ export default function ReportingAmountByHour(props) {
 
   return (
     <Card align='center' direction='column' w='100%' {...props} key={chartData}>
-      <Select>
-        <SwitchField/>
-      </Select>
       <Flex justify='space-between' align='start' px='10px' pt='5px'>
         <Flex flexDirection='column' align='start' me='20px'>
           <Flex w='100%'>

@@ -23,11 +23,9 @@ export const useLineChart = (callbackFn, categoryKey, chartDataKey) => {
   }, [callbackFn])
 
   useEffect(() => {
-    const _chartOptions = lineChartOptionsGeneral
-    _chartOptions['xaxis']['categories'] = categories
-    if (categoryKey == "order_time") {
-      _chartOptions['xaxis']['type'] = "datetime"
-    }
+    const _chartOptions = {...lineChartOptionsGeneral}
+    _chartOptions['xaxis']['categories'] = [...categories]
+    _chartOptions["chart"]["id"] = Math.random()
     setChartOptions({ ..._chartOptions })
   }, [categories])
 
