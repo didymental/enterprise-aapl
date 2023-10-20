@@ -52,10 +52,11 @@ const useOrderQtyByCity = () => {
 
 export default function OrderQtyByCity(props) {
   const { batchUpdateCities, total: runningTotal, callbackFn, options} = useOrderQtyByCity()
-  const { chartOptions, chartData, categories } = useLineChart(callbackFn, "ship_to_city_cd", "sum_order_qty")
+  const { chartOptions, chartData, categories } = useLineChart(callbackFn, "ship_to_city_cd", "sum_order_qty", 3)
 
+  console.log(categories, chartOptions)
   return (
-    <Card align='center' direction='column' w='100%' {...props} key={runningTotal}>
+    <Card align='center' direction='column' w='100%' {...props} >
       <Flex justify='space-between' align='start' px='10px' pt='5px'>
         <Flex flexDirection='column' align='start' me='20px'>
           <Flex w='100%'>
@@ -77,13 +78,10 @@ export default function OrderQtyByCity(props) {
           <Select isMulti value={categories.map(cat => ({ label: cat, value: cat }))} options={options.map(opt => ({ label: opt, value: opt }))} onChange={(newValue) => batchUpdateCities(newValue)} overflowY maxMenuHeight="40px"/>
         </Box>
       </Flex>
-      <Box h='300px' mt='auto' overflowY="auto">
-        <LineChart
+      <LineChart
           chartData={chartData}
           chartOptions={chartOptions}
         />
-      </Box>
-      
     </Card>
   );
 }

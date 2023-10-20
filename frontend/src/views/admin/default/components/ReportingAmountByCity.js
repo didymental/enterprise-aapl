@@ -39,7 +39,7 @@ const useReportingByCity = () => {
 
 export default function CityReportingAmount(props) {
   const { onSortColChange, onSortOrderChange, callbackFn} = useReportingByCity()
-  const { chartOptions, chartData } = useLineChart(callbackFn, "ship_to_city_cd", "sum_rptg_amt")
+  const { chartOptions, chartData } = useLineChart(callbackFn, "ship_to_city_cd", "sum_rptg_amt", 1)
 
   return (
     <Card align='center' direction='column' w='100%' {...props} key={chartData}>

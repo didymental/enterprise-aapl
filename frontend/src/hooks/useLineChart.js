@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { reduceByKey } from "utils/chart"
 import { lineChartOptionsGeneral } from "utils/chartOptions"
 
-export const useLineChart = (callbackFn, categoryKey, chartDataKey) => {
+export const useLineChart = (callbackFn, categoryKey, chartDataKey, chartId) => {
   const [chartOptions, setChartOptions] = useState({})
   const [chartData, setChartData] = useState([])
   const [categories, setCategories] = useState([])
@@ -25,7 +25,8 @@ export const useLineChart = (callbackFn, categoryKey, chartDataKey) => {
   useEffect(() => {
     const _chartOptions = {...lineChartOptionsGeneral}
     _chartOptions['xaxis']['categories'] = [...categories]
-    _chartOptions["chart"]["id"] = Math.random()
+    _chartOptions['xaxis']['type'] = "category"
+    _chartOptions["chart"]["id"] = chartId
     setChartOptions({ ..._chartOptions })
   }, [categories])
 

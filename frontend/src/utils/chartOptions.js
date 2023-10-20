@@ -57,7 +57,7 @@ export const lineChartOptionsGeneral = {
     width: 1,
   },
   xaxis: {
-    // type: "numeric",
+    type: "category",
     categories: ["SEP", "OCT", "NOV", "DEC", "JAN", "FEB"],
     labels: {
       style: {

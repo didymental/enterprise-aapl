@@ -39,7 +39,7 @@ const useCityReportingByHour = () => {
 
 export default function ReportingAmountByHour(props) {
   const { onStartTimeChange, onEndTimeChange, callbackFn} = useCityReportingByHour()
-  const { chartOptions, chartData } = useLineChart(callbackFn, "hour", "count")
+  const { chartOptions, chartData } = useLineChart(callbackFn, "hour", "count", 2)
 
   return (
     <Card align='center' direction='column' w='100%' {...props} key={chartData}>

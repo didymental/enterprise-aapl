@@ -1,36 +1,31 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import ReactApexChart from "react-apexcharts";
-import {Box} from "@chakra-ui/react"
+import apexchart from "apexcharts";
 
-class LineChart extends React.Component {
-  constructor(props) {
-    super(props);
+const LineChart = (props) => {
+  const [state, setState] = useState({
+    chartData: props.chartData,
+    chartOptions: props.chartOptions
+  })
 
-    this.state = {
-      chartData: [],
-      chartOptions: {},
-    };
-  }
+  useEffect(() => {
+    setState({
+      chartData: props.chartData,
+      chartOptions: props.chartOptions
+    })
+  }, [props])
 
-  componentDidMount() {
-    this.setState({
-      chartData: this.props.chartData,
-      chartOptions: this.props.chartOptions,
-    });
-  }
 
-  render() {
-    console.log('rerender')
-    return (
+  return (
       <ReactApexChart
-        options={this.state.chartOptions}
-        series={this.state.chartData}
+        options={state.chartOptions}
+        series={state.chartData}
         type='line'
         width='100%'
         height='100%'
       />
-    );
-  }
+  );
+
 }
 
 export default LineChart;
